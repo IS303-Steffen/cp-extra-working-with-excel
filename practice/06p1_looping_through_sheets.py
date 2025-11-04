@@ -19,3 +19,10 @@ PART 2:
     "example_06.xlsx"
 
 '''
+import openpyxl
+external_wb = openpyxl.load_workbook(r"mock_grades.xlsx")    #load the workbook
+for ws_obj in external_wb.worksheets:   #to make this work for all sheets, not just the active one
+    for row in ws_obj.iter_rows(min_col=2, max_col=2):  #loop through the active worksheet, focusing only on the rows with grades
+        if row[0].value == "C-":
+            row[0].value = "F"        #change the value from C- to F in all of the applicable rows in that column
+external_wb.save("example_06.xlsx")
